@@ -12,10 +12,9 @@ export default {
      * @param {DOMNode} node
      */
     getNodeOffsetY(node) {
-        let bodyRect = document.body.getBoundingClientRect();
+        let scrollTop = this.getScrollTop();
         let elemRect = node.getBoundingClientRect();
-        let offset = elemRect.bottom - bodyRect.top;
-        return offset;
+        return elemRect.top + scrollTop;
     },
 
     /**
@@ -47,6 +46,22 @@ export default {
             clearTimeout(timeout);
             timeout = setTimeout(() => func.apply(context, args), wait);
         };
+    },
+
+    /**
+     * Remove an item from the array
+     * @param  {any} item
+     * @param  {Array} array
+     * @return {Array} modified array
+     */
+    removeItemFromArray(array, item) {
+        let i = array.indexOf(item);
+
+        if (i > -1) {
+            array.splice(i, 1);
+        }
+
+        return array;
     },
 
     /**
