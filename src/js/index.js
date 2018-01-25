@@ -1,4 +1,5 @@
 import helpers from './helpers';
+
 export default class {
     constructor(options) {
         this.setOptions(options);
@@ -87,7 +88,7 @@ export default class {
      */
     addListeners() {
         window.addEventListener('scroll', helpers.throttle(() => this.setImagesToLoad(), this.throttle));
-        window.addEventListener('resize', helpers.debounce(() => this.refresh(), this.resizeDebounce));
+        window.addEventListener('resize', helpers.debounce(() => this.recalculateOffset(), this.resizeDebounce));
     }
 
     /**
@@ -117,10 +118,9 @@ export default class {
     }
 
     /**
-     * Recalculate data nodes and their offset
+     * Recalculate nodes offset
      */
-    refresh() {
-        this.setDataNodes();
+    recalculateOffset() {
         this.setImageOffsets();
     }
 }
