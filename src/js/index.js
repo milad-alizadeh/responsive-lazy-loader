@@ -3,10 +3,10 @@ import helpers from './helpers';
 export default class {
     constructor(options) {
         this.setOptions(options);
+        this.addListeners();
         this.setDataNodes();
         this.setImageOffsets();
         this.setImagesToLoad();
-        this.addListeners();
     }
 
     /**
@@ -18,6 +18,7 @@ export default class {
             threshold: 0,
             throttle: 250,
             resizeDebounce: 500,
+            callback: undefined,
             normal: 'data-normal',
             srcset: 'data-srcset',
             sizes: 'data-sizes',
@@ -47,18 +48,22 @@ export default class {
     }
 
     /**
-     * Create an image node based on a dataNode
+     * Create a promise which returns an image node
      * @param  {DOMNode} dataNode
-     * @return {[type]}          [description]
+     * @return {Promise}
      */
     createImageNode(dataNode) {
-        let img = new Image();
-        this.setAttr(img, 'class', this.getAttr(dataNode, 'class'));
-        this.setAttr(img, 'srcset', this.getAttr(dataNode, this.options.srcset));
-        this.setAttr(img, 'src', this.getAttr(dataNode, this.options.normal));
-        this.setAttr(img, 'alt', this.getAttr(dataNode, this.options.alt));
-        this.setAttr(img, 'sizes', this.getAttr(dataNode, this.options.sizes));
-        return img;
+        return new Promise((resolve, reject) => {
+            let img = new Image();
+            this.setAttr(img, 'class', this.getAttr(dataNode, 'class'));
+            this.setAttr(img, 'srcset', this.getAttr(dataNode, this.options.srcset));
+            this.setAttr(img, 'src', this.getAttr(dataNode, this.options.normal));
+            this.setAttr(img, 'alt', this.getAttr(dataNode, this.options.alt));
+            this.setAttr(img, 'sizes', this.getAttr(dataNode, this.options.sizes));
+            img.onload = (e) => resolve(e.target);
+            img.onerror = reject;
+            return img;
+        });
     }
 
     /**
@@ -88,7 +93,7 @@ export default class {
      */
     addListeners() {
         window.addEventListener('scroll', helpers.throttle(() => this.setImagesToLoad(), this.throttle));
-        window.addEventListener('resize', helpers.debounce(() => this.recalculateOffset(), this.resizeDebounce));
+        window.addEventListener('resize', helpers.debounce(() => this.recalculateAndLoad(), this.resizeDebounce));
     }
 
     /**
@@ -101,9 +106,9 @@ export default class {
             let inView = scrollTop + wh + (wh * (this.options.threshold / 100));
 
             this.dataNodes.forEach((dataNode, index) => {
-                if (dataNode.parentNode && dataNode.offsetY <= inView) {
+                console.log(dataNode.offsetY, inView);
+                if (dataNode.offsetY <= inView) {
                     this.loadImage(dataNode);
-                    this.setDataNodes();
                 }
             });
         }
@@ -113,14 +118,39 @@ export default class {
      * @param  {DOMNode} dataNode
      */
     loadImage(dataNode) {
-        let image = this.createImageNode(dataNode);
-        dataNode.parentNode.replaceChild(image, dataNode);
+        this.createImageNode(dataNode).then((image) => {
+            if (dataNode.parentNode) {
+                // Replace the dataNode with the loaded image
+                dataNode.parentNode.replaceChild(image, dataNode);
+
+                // Remove the loaded dataNode from dataNodes Array
+                this.dataNodes = helpers.removeItemFromArray(this.dataNodes, dataNode);
+
+                // Recalculate offsets and reload the visible images
+                this.recalculateAndLoad();
+
+                // Run the image callback if it's set
+                if (this.options.callback) {
+                    this.options.callback(image);
+                }
+            }
+        });
     }
 
     /**
      * Recalculate nodes offset
      */
-    recalculateOffset() {
+    recalculateAndLoad() {
         this.setImageOffsets();
+        this.setImagesToLoad();
+    }
+
+    /**
+     * Find
+     * @return {[type]} [description]
+     */
+    refresh() {
+        this.setDataNodes();
+        this.recalculateAndLoad();
     }
 }
