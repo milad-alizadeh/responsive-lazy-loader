@@ -61,10 +61,10 @@ export default class {
      */
     setListeners() {
         if (this.options.loadOnScroll) {
-            window.addEventListener('scroll', helpers.throttle(() => this.setLoadOnScroll(), this.throttle));
+            window.addEventListener('scroll', helpers.throttle(() => this.setLoadOnScroll(), this.options.throttle));
         }
 
-        window.addEventListener('resize', helpers.debounce(() => this.recalculateAndLoad(), this.resizeDebounce));
+        window.addEventListener('resize', helpers.debounce(() => this.recalculateAndLoad(), this.options.resizeDebounce));
     }
 
     /**
