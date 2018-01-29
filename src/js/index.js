@@ -21,12 +21,7 @@ export default class {
         if (this.dataNodes.length) {
             this.setListeners();
             this.setImageOffsets();
-
-            if (this.options.loadOnScroll) {
-                this.setLoadOnScroll();
-            } else {
-                this.setLoadOnInit();
-            }
+            this.options.loadOnScroll ? this.setLoadOnScroll() : this.setLoadOnInit();
         }
     }
 
