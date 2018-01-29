@@ -34,21 +34,6 @@ export default {
     },
 
     /**
-     * Debounce Function
-     * @param  {Function} func
-     * @param  {Int} wait
-     * @return {Function}
-     */
-    debounce(func, wait) {
-        let timeout;
-        return (...args) => {
-            const context = this;
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(context, args), wait);
-        };
-    },
-
-    /**
      * Remove an item from the array
      * @param  {any} item
      * @param  {Array} array
@@ -62,6 +47,21 @@ export default {
         }
 
         return array;
+    },
+
+    /**
+     * Debounce Function
+     * @param  {Function} func
+     * @param  {Int} wait
+     * @return {Function}
+     */
+    debounce(func, wait) {
+        let timeout;
+        return (...args) => {
+            const context = this;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
     },
 
     /**
