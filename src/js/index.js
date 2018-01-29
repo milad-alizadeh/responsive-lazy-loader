@@ -171,11 +171,7 @@ export default class {
      */
     recalculateAndLoad() {
         this.setImageOffsets();
-        if (this.options.loadOnScroll) {
-            this.setLoadOnScroll();
-        } else {
-            this.setLoadOnInit();
-        }
+        this.options.loadOnScroll ? this.setLoadOnScroll() : this.setLoadOnInit();
     }
 
     /**
