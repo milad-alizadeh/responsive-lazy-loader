@@ -1,51 +1,21 @@
 import helpers from './helpers';
+import ImageNode from './imagenode';
+import Options from './options';
 
 /**
- * Lightweight Javascriot plugin for lazy loading images
- * Supports scroll detection
- * @param INT threshold - how much in view do we want the image to be before we lazyload it
- * @param INT throttle - the frequency of our throttle
- * @param INT resizeDebounce - how often we check the resize
- * @param Boolean loadOnScroll - load the images when they're in view or all at once
- * @param Function callback - after the image has loaded
- * @param String src - the base image
- * @param String srcset - the responsive image sizes
- * @param String sizes - at which breakpoint the image sizes show
- * @param String alt - the attribute for the alt text
+ * Lightweight Javascript plugin for lazy loading images
+ * Supports load on scroll or load on page init
  */
 export default class {
     constructor(options) {
-        this.options = this.setOptions(options);
+        this.options = Options.setOptions(options);
         this.dataNodes = this.getDataNodes();
 
         if (this.dataNodes.length) {
             this.setListeners();
-            this.setImageOffsets();
+            ImageNode.setImageOffsets(this.dataNodes);
             this.options.loadOnScroll ? this.setLoadOnScroll() : this.setLoadOnInit();
         }
-    }
-
-    /**
-     * Combines our default options with those set on init
-     * @return {Object}
-     */
-    setOptions(options) {
-        let defaults = {
-            threshold: 0,
-            throttle: 250,
-            resizeDebounce: 500,
-            loadOnScroll: true,
-            callback: undefined,
-            src: 'data-src',
-            srcset: 'data-srcset',
-            sizes: 'data-sizes',
-            alt: 'alt'
-        };
-
-        return {
-            ...defaults,
-            ...options
-        };
     }
 
     /**
@@ -57,126 +27,73 @@ export default class {
     }
 
     /**
-     * Add scroll and resize listeners
+     * Set resize and optionally scroll listeners
      */
     setListeners() {
         if (this.options.loadOnScroll) {
             window.addEventListener('scroll', helpers.throttle(() => this.setLoadOnScroll(), this.options.throttle));
         }
-
         window.addEventListener('resize', helpers.debounce(() => this.recalculateAndLoad(), this.options.resizeDebounce));
     }
 
     /**
-     * Loop through all the dataNodes
-     * Load the image based on their position on page
+     * Once the image has been added to the DOM
+     * @param  {Object} dataNode
+     * @param  {Image Node} image
      */
-    setLoadOnScroll() {
-        let wh = helpers.getWindowHeight();
-        let scrollTop = helpers.getScrollTop();
-        let inView = scrollTop + wh + (wh * (this.options.threshold / 100));
+    onImageCreated(dataNode, image) {
+        if (dataNode.parentNode) {
+            // Replace the dataNode with the loaded image
+            dataNode.parentNode.replaceChild(image, dataNode);
+            this.dataNodes = helpers.removeItemFromArray(this.dataNodes, dataNode);
 
-        this.dataNodes.forEach((dataNode, index) => {
-            if (dataNode.offsetY <= inView) {
-                this.loadImage(dataNode);
+            // Recalculate offsets and reload the visible images
+            this.recalculateAndLoad();
+
+            // Run the image callback if it's set
+            if (this.options.callback) {
+                this.options.callback(image);
             }
-        });
-    }
-
-    /**
-     * If images are to be loaded
-     */
-    setLoadOnInit() {
-        this.dataNodes.forEach((dataNode, index) => {
-            this.loadImage(dataNode);
-        });
-    }
-
-    /**
-     * Create an image from the data node and place it in dom
-     * @param  {DOMNode} dataNode
-     */
-    loadImage(dataNode) {
-        this.createImageNode(dataNode).then((image) => {
-            if (dataNode.parentNode) {
-                // Replace the dataNode with the loaded image
-                dataNode.parentNode.replaceChild(image, dataNode);
-
-                // Remove the loaded dataNode from dataNodes Array
-                this.dataNodes = helpers.removeItemFromArray(this.dataNodes, dataNode);
-
-                // Recalculate offsets and reload the visible images
-                this.recalculateAndLoad();
-
-                // Run the image callback if it's set
-                if (this.options.callback) {
-                    this.options.callback(image);
-                }
-            }
-        });
-    }
-
-    /**
-     * Set data nodes offsetY
-     */
-    setImageOffsets() {
-        this.dataNodes.forEach(dataNode => {
-            dataNode.offsetY = helpers.getNodeOffsetY(dataNode);
-        });
-    }
-
-    /**
-     * Create a promise which returns an image node
-     * @param  {DOMNode} dataNode
-     * @return {Promise}
-     */
-    createImageNode(dataNode) {
-        return new Promise((resolve, reject) => {
-            let img = new Image();
-            this.setAttr(img, 'class', this.getAttr(dataNode, 'class'));
-            this.setAttr(img, 'srcset', this.getAttr(dataNode, this.options.srcset));
-            this.setAttr(img, 'src', this.getAttr(dataNode, this.options.src));
-            this.setAttr(img, 'alt', this.getAttr(dataNode, this.options.alt));
-            this.setAttr(img, 'sizes', this.getAttr(dataNode, this.options.sizes));
-            img.onload = (e) => resolve(e.target);
-            img.onerror = reject;
-            return img;
-        });
-    }
-
-    /**
-     * Set attribute of a dom node
-     * @param {[DOMNode]} node
-     * @param {string} attributeName
-     * @param {string} value
-     */
-    setAttr(node, attribute, value) {
-        if (value) {
-            node.setAttribute(attribute, value);
         }
     }
 
     /**
-     * Get attribute of a dom node
-     * @param  {[DOMNode]} node
-     * @param  {string} attributeName
-     * @return {string}
+     * If we want the images to load when they're in the viewport
      */
-    getAttr(node, attributeName) {
-        return node.getAttribute(attributeName);
+    setLoadOnScroll() {
+        let wh = helpers.getWindowHeight();
+        let inView = helpers.getScrollTop() + wh + (wh * (this.options.threshold / 100));
+
+        this.dataNodes.forEach((dataNode, index) => {
+            if (dataNode.offsetY <= inView) {
+                ImageNode.createImageNode(dataNode, this.options).then(image => {
+                    this.onImageCreated(dataNode, image);
+                });
+            }
+        });
     }
 
     /**
-     * Recalculate nodes offset
+     * If we want all of the images to load on page init
+     */
+    setLoadOnInit() {
+        this.dataNodes.forEach((dataNode, index) => {
+            ImageNode.createImageNode(dataNode, this.options).then(image => {
+                this.onImageCreated(dataNode, image);
+            });
+        });
+    }
+
+    /**
+     * Recalculate the node offsets
      */
     recalculateAndLoad() {
-        this.setImageOffsets();
+        ImageNode.setImageOffsets(this.dataNodes);
         this.options.loadOnScroll ? this.setLoadOnScroll() : this.setLoadOnInit();
     }
 
     /**
-     * Refresh
-     * @return {[type]} [description]
+     * Search for the datanodes again and reload them
      */
     refresh() {
         this.setDataNodes();
