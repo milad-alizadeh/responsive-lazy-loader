@@ -8,7 +8,7 @@ import helpers from './helpers';
  * @param INT resizeDebounce - how often we check the resize
  * @param Boolean loadOnScroll - load the images when they're in view or all at once
  * @param Function callback - after the image has loaded
- * @param String core - the base image
+ * @param String src - the base image
  * @param String srcset - the responsive image sizes
  * @param String sizes - at which breakpoint the image sizes show
  * @param String alt - the attribute for the alt text
@@ -41,7 +41,7 @@ export default class {
             resizeDebounce: 500,
             loadOnScroll: true,
             callback: undefined,
-            core: 'data-core',
+            src: 'data-src',
             srcset: 'data-srcset',
             sizes: 'data-sizes',
             alt: 'alt'
@@ -54,11 +54,11 @@ export default class {
     }
 
     /**
-     * Find all data nodes with the core data attribute
+     * Find all data nodes with the src data attribute
      * @return {Object}
      */
     getDataNodes() {
-        return helpers.getNodes(`[${this.options.core}]`);
+        return helpers.getNodes(`[${this.options.src}]`);
     }
 
     /**
@@ -140,7 +140,7 @@ export default class {
             let img = new Image();
             this.setAttr(img, 'class', this.getAttr(dataNode, 'class'));
             this.setAttr(img, 'srcset', this.getAttr(dataNode, this.options.srcset));
-            this.setAttr(img, 'src', this.getAttr(dataNode, this.options.core));
+            this.setAttr(img, 'src', this.getAttr(dataNode, this.options.src));
             this.setAttr(img, 'alt', this.getAttr(dataNode, this.options.alt));
             this.setAttr(img, 'sizes', this.getAttr(dataNode, this.options.sizes));
             img.onload = (e) => resolve(e.target);
