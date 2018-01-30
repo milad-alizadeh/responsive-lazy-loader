@@ -16,7 +16,7 @@ export default {
      * @return {Object}
      */
     setOptions(options) {
-        let defaults = {
+        let output = {
             threshold: 0,
             throttle: 250,
             resizeDebounce: 500,
@@ -28,9 +28,9 @@ export default {
             alt: 'alt'
         };
 
-        return {
-            ...defaults,
+        return (typeof options === 'object') ? {
+            ...output,
             ...options
-        };
+        } : output;
     }
 };
