@@ -16,8 +16,7 @@ describe('Options', () => {
             callback: undefined,
             src: 'data-core',
             srcset: 'data-srcset',
-            sizes: 'data-sizes',
-            alt: 'alt'
+            sizes: 'data-sizes'
         };
         expect(options.setOptions(input)).toEqual(output);
     });
@@ -33,8 +32,7 @@ describe('Options', () => {
             callback: undefined,
             src: 'data-src',
             srcset: 'data-srcset',
-            sizes: 'data-sizes',
-            alt: 'alt'
+            sizes: 'data-sizes'
         };
         expect(options.setOptions(input)).toEqual(output);
     });

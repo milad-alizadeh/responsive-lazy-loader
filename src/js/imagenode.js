@@ -75,10 +75,6 @@ export default {
                 value: options.src
             },
             {
-                name: 'alt',
-                value: options.alt
-            },
-            {
                 name: 'sizes',
                 value: options.sizes
             }
