@@ -132,6 +132,6 @@ describe('Image Node', () => {
         let input = [testImage];
         window.pageYOffset = 200;
         imagenode.setImageOffsets(input);
-        expect(input[0].offsetY).toBe(1200);
+        expect(input[0].offsetY).toBe(200);
     });
 });
