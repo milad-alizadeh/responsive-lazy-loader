@@ -4,7 +4,9 @@
   "version": "0.1.1",
   "description": "Responsive Lazy Loader is a lightweight script that loads your images when they enter the viewport",
   "main": "dist/responsive-lazy-loader.min.js",
-  "dependencies": {},
+  "dependencies": {
+    "codecov": "^3.0.0"
+  },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
     "babel-core": "^6.25.0",
@@ -57,9 +59,9 @@
     "report-coverage": "codecov"
   },
   "keywords": [
-      "lazyload",
-      "responsive images",
-      "lazyloader"
+    "lazyload",
+    "responsive images",
+    "lazyloader"
   ],
   "repository": {
     "type": "git",
