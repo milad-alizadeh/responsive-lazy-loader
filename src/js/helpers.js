@@ -56,7 +56,14 @@ export default {
      */
     loadingArea(threshold) {
         let wh = this.getWindowHeight();
-        return this.getScrollTop() + wh + (wh * (threshold / 100));
+        let scrollTop = this.getScrollTop();
+        let min = scrollTop - wh - (wh * (threshold / 100));
+        let max = scrollTop + wh + (wh * (threshold / 100));
+
+        return {
+            min: min > 0 ? min : 0,
+            max
+        };
     },
 
     /**

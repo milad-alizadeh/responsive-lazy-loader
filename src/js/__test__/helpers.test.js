@@ -65,6 +65,7 @@ describe('Helpers', () => {
     test('loadingArea()', () => {
         // Window height is 768
         // Scroll top is 200
-        expect(helpers.loadingArea(10)).toBe(1044.8);
+        expect(helpers.loadingArea(10).max).toBe(1044.8);
+        expect(helpers.loadingArea(10).min).toBe(0);
     });
 });
