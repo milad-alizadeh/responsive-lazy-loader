@@ -95,7 +95,7 @@ export default class {
      * Search for the datanodes again and reload them
      */
     refresh() {
-        this.setDataNodes();
+        this.dataNodes = this.getDataNodes();
         this.recalculateAndLoad();
     }
 }
