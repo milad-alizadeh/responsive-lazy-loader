@@ -1,9 +1,9 @@
 {
-  "name": "responsive-image-loader",
+  "name": "responsize-lazy-loader",
   "author": "Milad Alizadeh",
   "version": "0.0.1",
-  "description": "An accessible, lightweight and modern javascript accordion with no dependencies and extensive api.",
-  "main": "dist/responsive-image-loader.min.js",
+  "description": "A modern and lightweight javascript library for lazy loading responsive images.",
+  "main": "dist/responsize-lazy-loader.min.js",
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^7.1.6",
@@ -55,14 +55,19 @@
     "build": "node ./node_modules/webpack/bin/webpack.js --hide-modules -p --progress",
     "production": "npm run test && npm run build"
   },
-  "keywords": [],
+  "keywords": [
+      "lazyload",
+      "responsive images",
+      "lazyloader",
+      "es6"
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/milad-alizadeh/responsive-image-loader"
+    "url": "https://github.com/milad-alizadeh/responsize-lazy-loader"
   },
   "bugs": {
-    "url": "https://github.com/milad-alizadeh/responsive-image-loader/issues"
+    "url": "https://github.com/milad-alizadeh/responsize-lazy-loader/issues"
   },
-  "homepage": "https://github.com/milad-alizadeh/responsive-image-loader",
+  "homepage": "https://github.com/milad-alizadeh/responsize-lazy-loader",
   "license": "MIT"
 }
