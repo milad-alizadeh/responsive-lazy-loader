@@ -50,6 +50,16 @@ export default {
     },
 
     /**
+     * The hit area of where we load images
+     * @param  {INT} threshold - how much of an offset do we want the image to have before it starts loading
+     * @return {INT}
+     */
+    loadingArea(threshold) {
+        let wh = this.getWindowHeight();
+        return this.getScrollTop() + wh + (wh * (threshold / 100));
+    },
+
+    /**
      * Debounce Function
      * @param  {Function} func
      * @param  {Int} wait

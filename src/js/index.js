@@ -61,11 +61,8 @@ export default class {
      * If we want the images to load when they're in the viewport
      */
     setLoadOnScroll() {
-        let wh = helpers.getWindowHeight();
-        let inView = helpers.getScrollTop() + wh + (wh * (this.options.threshold / 100));
-
         this.dataNodes.forEach((dataNode, index) => {
-            if (dataNode.offsetY <= inView) {
+            if (dataNode.offsetY <= helpers.loadingArea(this.options.threshold)) {
                 ImageNode.createImageNode(dataNode, this.options).then(image => {
                     this.onImageCreated(dataNode, image);
                 });

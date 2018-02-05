@@ -8,7 +8,6 @@
 * @param String src - the base image
 * @param String srcset - the responsive image sizes
 * @param String sizes - at which breakpoint the image sizes show
-* @param String alt - the attribute for the alt text
 */
 export default {
     /**
@@ -24,8 +23,7 @@ export default {
             callback: undefined,
             src: 'data-src',
             srcset: 'data-srcset',
-            sizes: 'data-sizes',
-            alt: 'alt'
+            sizes: 'data-sizes'
         };
 
         return (typeof options === 'object') ? {

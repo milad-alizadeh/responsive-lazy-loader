@@ -65,7 +65,8 @@ export default {
      * @return {Array}
      */
     getCustomImgAttrs(options) {
-        return [
+        let imgAttrs = [];
+        let customOptions = [
             {
                 name: 'srcset',
                 value: options.srcset
@@ -75,14 +76,16 @@ export default {
                 value: options.src
             },
             {
-                name: 'alt',
-                value: options.alt
-            },
-            {
                 name: 'sizes',
                 value: options.sizes
             }
         ];
+        customOptions.forEach((option) => {
+            if (option.value !== undefined) {
+                imgAttrs.push(option);
+            }
+        });
+        return imgAttrs;
     },
 
     /**
