@@ -62,7 +62,7 @@ describe('Helpers', () => {
         expect(newArray).toEqual([1, 2, 4]);
     });
 
-    test('loadingArea', () => {
+    test('loadingArea()', () => {
         // Window height is 768
         // Scroll top is 200
         expect(helpers.loadingArea(10)).toBe(1044.8);

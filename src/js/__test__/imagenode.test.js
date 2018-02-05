@@ -15,7 +15,7 @@ describe('Image Node', () => {
         return img;
     };
 
-    test('get class attribute successfully correctly', () => {
+    test('getAttr() get class attribute successfully correctly', () => {
         let inputImage = new Image();
         inputImage.setAttribute('src', '#');
         inputImage.setAttribute('alt', 'My Test Image');
@@ -25,7 +25,7 @@ describe('Image Node', () => {
         expect(imagenode.getAttr(inputImage, inputAttr)).toBe(output);
     });
 
-    test('get attribute with a null value', () => {
+    test('getAttr() get attribute with a null value', () => {
         let inputImage = new Image();
         inputImage.setAttribute('src', '#');
         let inputAttr = 'class';
@@ -33,7 +33,7 @@ describe('Image Node', () => {
         expect(imagenode.getAttr(inputImage, inputAttr)).toBe(output);
     });
 
-    test('set custom attributes', () => {
+    test('setCustomAttrs() set custom attributes', () => {
         let newImage = new Image();
         imagenode.setCustomAttrs(originalImage(), newImage, options.setOptions());
 
@@ -45,14 +45,14 @@ describe('Image Node', () => {
         expect(newImage).toEqual(output);
     });
 
-    test('set custom attributes should add no attributes if none are set', () => {
+    test('setCustomAttrs() set custom attributes should add no attributes if none are set', () => {
         let previousImage = new Image();
         let newImage = new Image();
         imagenode.setCustomAttrs(previousImage, newImage, options.setOptions());
         expect(newImage).toEqual(new Image());
     });
 
-    test('set additional attributes', () => {
+    test('setAdditionalAttrs() set additional attributes', () => {
         let newImage = new Image();
         imagenode.setAdditionalAttrs(originalImage(), newImage, options.setOptions());
 
@@ -63,13 +63,13 @@ describe('Image Node', () => {
         expect(newImage).toEqual(output);
     });
 
-    test('set additional attributes with no attributes', () => {
+    test('setAdditionalAttrs() set additional attributes with no attributes', () => {
         let newImage = new Image();
         imagenode.setAdditionalAttrs(originalImage(false), newImage, options.setOptions());
         expect(newImage).toEqual(new Image());
     });
 
-    test('get custom attributes', () => {
+    test('getCustomImgAttrs() get custom attributes', () => {
         let input = {
             srcset: 'srcset',
             src: 'src',
@@ -93,7 +93,7 @@ describe('Image Node', () => {
         expect(imagenode.getCustomImgAttrs(input)).toEqual(output);
     });
 
-    test('get custom attributes with undefined option', () => {
+    test('getCustomImgAttrs() get custom attributes with undefined option', () => {
         let input = {
             srcset: 'srcset',
             sizes: '400w'
@@ -112,7 +112,7 @@ describe('Image Node', () => {
         expect(imagenode.getCustomImgAttrs(input)).toEqual(output);
     });
 
-    test('set attribute with value', () => {
+    test('setAttr() set attribute with value', () => {
         let newImage = new Image();
         imagenode.setAttr(newImage, 'alt', 'Test Alt');
         let output = new Image();
@@ -120,14 +120,14 @@ describe('Image Node', () => {
         expect(newImage).toEqual(output);
     });
 
-    test('set attribute with undefined value', () => {
+    test('setAttr() set attribute with undefined value', () => {
         let newImage = new Image();
         imagenode.setAttr(newImage, 'alt', undefined);
         let output = new Image();
         expect(newImage).toEqual(output);
     });
 
-    test('set image offsets', () => {
+    test('setImageOffsets() set image offsets', () => {
         let testImage = new Image();
         let input = [testImage];
         window.pageYOffset = 200;

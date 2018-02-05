@@ -1,7 +1,7 @@
 import options from '../options';
 
 describe('Options', () => {
-    test('new options to be combined with defaults', () => {
+    test('setOptions() new options to be combined with defaults', () => {
         let input = {
             throttle: 3000,
             loadOnScroll: false,
@@ -21,7 +21,7 @@ describe('Options', () => {
         expect(options.setOptions(input)).toEqual(output);
     });
 
-    test('setOptions with a bad input should return default parameters', () => {
+    test('setOptions() with a bad input should return default parameters', () => {
         let input = 'a string';
 
         let output = {
