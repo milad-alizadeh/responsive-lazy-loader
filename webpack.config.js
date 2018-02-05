@@ -19,8 +19,8 @@ module.exports = {
     externals: [],
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'responsive-image-loader.min.js',
-        library: 'responsive-image-loader.js',
+        filename: 'responsize-lazy-loader.min.js',
+        library: 'responsize-lazy-loader.js',
         libraryTarget: 'umd',
         umdNamedDefine: true
     },
@@ -60,7 +60,7 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['./dist']),
-        new ExtractTextPlugin('responsive-image-loader.min.css')
+        new ExtractTextPlugin('responsize-lazy-loader.min.css')
     ],
     devtool: false,
     performance: {
