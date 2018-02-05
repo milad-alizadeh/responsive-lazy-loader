@@ -2,7 +2,7 @@
   "name": "responsive-lazy-loader",
   "author": "Milad Alizadeh",
   "version": "0.0.1",
-  "description": "A modern and lightweight javascript library for lazy loading responsive images.",
+  "description": "Responsive Lazy Loader is a lightweight script that loads your images when they enter the viewport",
   "main": "dist/responsive-lazy-loader.min.js",
   "dependencies": {},
   "devDependencies": {
@@ -58,8 +58,7 @@
   "keywords": [
       "lazyload",
       "responsive images",
-      "lazyloader",
-      "es6"
+      "lazyloader"
   ],
   "repository": {
     "type": "git",
