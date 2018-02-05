@@ -1,7 +1,7 @@
 {
   "name": "responsive-lazy-loader",
   "author": "Milad Alizadeh",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "Responsive Lazy Loader is a lightweight script that loads your images when they enter the viewport",
   "main": "dist/responsive-lazy-loader.min.js",
   "dependencies": {},
