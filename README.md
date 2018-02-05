@@ -1,10 +1,10 @@
 # Responsive Lazy Loader
-[![npm version][npm-badge-version]][npm-link]
+[![npm version][npm-badge-version]][npm-link] [![Build Status][travis-badge]][travis-link]
 
-[npm-badge-version]: https://img.shields.io/npm/v/postcss-encode-background-svgs.svg
-[npm-link]: https://www.npmjs.com/package/postcss-encode-background-svgs
-[travis-badge]: https://travis-ci.org/chrisboakes/postcss-encode-background-svgs.svg?branch=master
-[travis-link]: https://travis-ci.org/chrisboakes/postcss-encode-background-svgs
+[npm-badge-version]: https://img.shields.io/npm/v/responsive-lazy-loader.svg
+[npm-link]: https://www.npmjs.com/package/responsive-lazy-loader
+[travis-badge]: https://travis-ci.org/milad-alizadeh/responsive-lazy-loader.svg?branch=master
+[travis-link]: https://travis-ci.org/milad-alizadeh/responsive-lazy-loader
 
 Responsive Lazy Loader is a lightweight script that loads your images when they enter the viewport. Not only that but it honours your responsive (srcset) images.
 
