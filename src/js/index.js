@@ -14,7 +14,7 @@ export default class {
         if (this.dataNodes.length) {
             this.setListeners();
             ImageNode.setImageOffsets(this.dataNodes);
-            this.options.loadOnScroll ? this.setLoadOnScroll() : this.setLoadOnInit();
+            this.setLoad();
         }
     }
 
@@ -73,9 +73,9 @@ export default class {
     }
 
     /**
-     * If we want all of the images to load on page init
+     * If we want all of the images to load at once
      */
-    setLoadOnInit() {
+    setLoadAll() {
         this.dataNodes.forEach((dataNode, index) => {
             ImageNode.createImageNode(dataNode, this.options).then(image => {
                 this.onImageCreated(dataNode, image);
@@ -84,11 +84,18 @@ export default class {
     }
 
     /**
+     * Set images to load based on scroll or load all of them
+     */
+    setLoad() {
+        this.options.loadOnScroll ? this.setLoadOnScroll() : this.setLoadAll();
+    }
+
+    /**
      * Recalculate the node offsets
      */
     recalculateAndLoad() {
         ImageNode.setImageOffsets(this.dataNodes);
-        this.options.loadOnScroll ? this.setLoadOnScroll() : this.setLoadOnInit();
+        this.setLoad();
     }
 
     /**
