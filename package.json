@@ -1,9 +1,9 @@
 {
-  "name": "responsize-lazy-loader",
+  "name": "responsive-lazy-loader",
   "author": "Milad Alizadeh",
   "version": "0.0.1",
   "description": "A modern and lightweight javascript library for lazy loading responsive images.",
-  "main": "dist/responsize-lazy-loader.min.js",
+  "main": "dist/responsive-lazy-loader.min.js",
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^7.1.6",
@@ -63,11 +63,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/milad-alizadeh/responsize-lazy-loader"
+    "url": "https://github.com/milad-alizadeh/responsive-lazy-loader"
   },
   "bugs": {
-    "url": "https://github.com/milad-alizadeh/responsize-lazy-loader/issues"
+    "url": "https://github.com/milad-alizadeh/responsive-lazy-loader/issues"
   },
-  "homepage": "https://github.com/milad-alizadeh/responsize-lazy-loader",
+  "homepage": "https://github.com/milad-alizadeh/responsive-lazy-loader",
   "license": "MIT"
 }
