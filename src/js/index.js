@@ -62,7 +62,9 @@ export default class {
      */
     setLoadOnScroll() {
         this.dataNodes.forEach((dataNode, index) => {
-            if (dataNode.offsetY <= helpers.loadingArea(this.options.threshold)) {
+            let loadingArea = helpers.loadingArea(this.options.threshold);
+
+            if (dataNode.offsetY >= loadingArea.min && dataNode.offsetY <= loadingArea.max) {
                 ImageNode.createImageNode(dataNode, this.options).then(image => {
                     this.onImageCreated(dataNode, image);
                 });
