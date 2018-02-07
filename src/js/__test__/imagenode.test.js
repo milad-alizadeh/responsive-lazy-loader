@@ -1,14 +1,6 @@
 import imagenode from '../imagenode';
 
 describe('Image Node', () => {
-    test('setImageOffsets() set image offsets', () => {
-        // let testImage = new Image();
-        // let input = [testImage];
-        // window.pageYOffset = 200;
-        // imagenode.setImageOffsets(input);
-        // expect(input[0].offsetY).toBe(200);
-    });
-
     test('setSources() set picture tag sources data-srcset attribute', () => {
         document.body.innerHTML = `
             <picture>
