@@ -14,11 +14,7 @@ export default {
     createImageNode(dataNode, options) {
         // Chage the data-src of sources if we are loading a picture tag
         if (helpers.isInPictureTag(dataNode)) {
-            let sources = helpers.getSiblings(dataNode);
-
-            sources.forEach(source => {
-                this.setAttr(source, 'srcset', this.getAttr(source, 'data-srcset'));
-            });
+            this.setSourceset(dataNode);
         }
 
         this.setAttr(dataNode, 'src', this.getAttr(dataNode, 'data-src'));
@@ -27,6 +23,14 @@ export default {
             dataNode.onload = (e) => resolve(e.target);
             dataNode.onerror = reject;
             return dataNode;
+        });
+    },
+
+    setSources(dataNode) {
+        let sources = helpers.getSiblings(dataNode);
+
+        sources.forEach(source => {
+            this.setAttr(source, 'srcset', this.getAttr(source, 'data-srcset'));
         });
     },
 
