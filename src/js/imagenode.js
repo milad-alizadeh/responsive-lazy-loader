@@ -12,13 +12,21 @@ export default {
      * @return {Promise}
      */
     createImageNode(dataNode, options) {
+        // Chage the data-src of sources if we are loading a picture tag
+        if (helpers.isInPictureTag(dataNode)) {
+            let sources = helpers.getSiblings(dataNode);
+
+            sources.forEach(source => {
+                this.setAttr(source, 'srcset', this.getAttr(source, 'data-srcset'));
+            });
+        }
+
+        this.setAttr(dataNode, 'src', this.getAttr(dataNode, 'data-src'));
+
         return new Promise((resolve, reject) => {
-            let img = new Image();
-            this.setCustomAttrs(dataNode, img, options);
-            this.setAdditionalAttrs(dataNode, img, options);
-            img.onload = (e) => resolve(e.target);
-            img.onerror = reject;
-            return img;
+            dataNode.onload = (e) => resolve(e.target);
+            dataNode.onerror = reject;
+            return dataNode;
         });
     },
 
@@ -30,62 +38,6 @@ export default {
      */
     getAttr(node, attributeName) {
         return node.getAttribute(attributeName);
-    },
-
-    /**
-     * Loop through each custom attribute and assign it to the new image tag
-     * @param {DOM Element} dataNode
-     * @param {Image} img
-     * @param {Object} options
-     */
-    setCustomAttrs(dataNode, img, options) {
-        this.getCustomImgAttrs(options).forEach((attr) => {
-            this.setAttr(img, attr.name, this.getAttr(dataNode, attr.value));
-        });
-    },
-
-    /**
-     * Loop through every attribute on the original image tag and apply it to the new one
-     * Excludes the custom attributes that have already been set
-     * @param {DOM Element} dataNode
-     * @param {Image} img
-     * @param {Object} options
-     */
-    setAdditionalAttrs(dataNode, img, options) {
-        [].slice.call(dataNode.attributes).forEach((attr) => {
-            if (!['src', 'data-src', 'data-srcset', 'data-sizes'].includes(attr.name)) {
-                this.setAttr(img, attr.name, attr.value);
-            }
-        });
-    },
-
-    /**
-     * Custom settings for new img tag attributes
-     * @param  {Object} options
-     * @return {Array}
-     */
-    getCustomImgAttrs(options) {
-        let imgAttrs = [];
-        let customOptions = [
-            {
-                name: 'srcset',
-                value: options.srcset
-            },
-            {
-                name: 'src',
-                value: options.src
-            },
-            {
-                name: 'sizes',
-                value: options.sizes
-            }
-        ];
-        customOptions.forEach((option) => {
-            if (option.value !== undefined) {
-                imgAttrs.push(option);
-            }
-        });
-        return imgAttrs;
     },
 
     /**
