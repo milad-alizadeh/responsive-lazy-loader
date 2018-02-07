@@ -44,9 +44,7 @@ export default class {
     onImageCreated(dataNode, image) {
         if (dataNode.parentNode) {
             // Replace the dataNode with the loaded image
-            dataNode.parentNode.replaceChild(image, dataNode);
             this.dataNodes = helpers.removeItemFromArray(this.dataNodes, dataNode);
-
             // Recalculate offsets and reload the visible images
             this.recalculateAndLoad();
 
