@@ -18,6 +18,11 @@ export default {
         }
 
         helpers.setAttr(dataNode, 'src', helpers.getAttr(dataNode, 'data-src'));
+        helpers.setAttr(dataNode, 'srcset', helpers.getAttr(dataNode, 'data-srcset'));
+        helpers.setAttr(dataNode, 'sizes', helpers.getAttr(dataNode, 'data-sizes'));
+        helpers.removeAttr(dataNode, 'data-src');
+        helpers.removeAttr(dataNode, 'data-srcset');
+        helpers.removeAttr(dataNode, 'data-sizes');
 
         return new Promise((resolve, reject) => {
             dataNode.onload = (e) => resolve(e.target);
@@ -31,6 +36,7 @@ export default {
 
         sources.forEach(source => {
             helpers.setAttr(source, 'srcset', helpers.getAttr(source, 'data-srcset'));
+            helpers.removeAttr(source, 'data-srcset');
         });
     },
 
