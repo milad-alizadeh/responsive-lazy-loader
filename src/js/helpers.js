@@ -18,6 +18,18 @@ export default {
     },
 
     /**
+     * Find a node siblings with a specific class name
+     * @param {DOMElement} el - A fiven DOM node
+     * @param {String} className - Siblings class name
+     * @return {Array} - An array of DOM nodes
+     */
+    getSiblings(el) {
+        return [].filter.call(el.parentNode.children, (child) => {
+            return child !== el && child.nodeType === 1;
+        });
+    },
+
+    /**
      * Get scroll top
      * @return {int}
      */
@@ -47,6 +59,15 @@ export default {
         }
 
         return array;
+    },
+
+    /**
+     * Check if the parent of a node is a picture tag
+     * @param  {DOMElement} dataNode
+     * @return {Boolean}
+     */
+    isInPictureTag(dataNode) {
+        return dataNode.parentNode.nodeName === 'PICTURE';
     },
 
     /**
