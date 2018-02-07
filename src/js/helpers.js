@@ -62,6 +62,28 @@ export default {
     },
 
     /**
+     * Get attribute of a dom node
+     * @param  {[DOMNode]} node
+     * @param  {string} attributeName
+     * @return {string}
+     */
+    getAttr(node, attributeName) {
+        return node.getAttribute(attributeName);
+    },
+
+    /**
+     * Set attribute of a dom node
+     * @param {[DOMNode]} node
+     * @param {string} attributeName
+     * @param {string} value
+     */
+    setAttr(node, attribute, value) {
+        if (value) {
+            node.setAttribute(attribute, value);
+        }
+    },
+
+    /**
      * Check if the parent of a node is a picture tag
      * @param  {DOMElement} dataNode
      * @return {Boolean}

@@ -53,6 +53,39 @@ describe('Helpers', () => {
         expect(siblings[0].classList.contains('item-1')).toBe(true);
     });
 
+    test('getAttr() get class attribute successfully correctly', () => {
+        let inputImage = new Image();
+        inputImage.setAttribute('src', '#');
+        inputImage.setAttribute('alt', 'My Test Image');
+        inputImage.setAttribute('class', 'testimage');
+        let inputAttr = 'class';
+        let output = 'testimage';
+        expect(helpers.getAttr(inputImage, inputAttr)).toBe(output);
+    });
+
+    test('getAttr() get attribute with a null value', () => {
+        let inputImage = new Image();
+        inputImage.setAttribute('src', '#');
+        let inputAttr = 'class';
+        let output = null;
+        expect(helpers.getAttr(inputImage, inputAttr)).toBe(output);
+    });
+
+    test('setAttr() set attribute with value', () => {
+        let newImage = new Image();
+        helpers.setAttr(newImage, 'alt', 'Test Alt');
+        let output = new Image();
+        output.setAttribute('alt', 'Test Alt');
+        expect(newImage).toEqual(output);
+    });
+
+    test('setAttr() set attribute with undefined value', () => {
+        let newImage = new Image();
+        helpers.setAttr(newImage, 'alt', undefined);
+        let output = new Image();
+        expect(newImage).toEqual(output);
+    });
+
     test('isInPictureTag()', () => {
         document.body.innerHTML = `
             <picture>

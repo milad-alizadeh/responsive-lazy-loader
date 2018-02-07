@@ -14,10 +14,10 @@ export default {
     createImageNode(dataNode, options) {
         // Chage the data-src of sources if we are loading a picture tag
         if (helpers.isInPictureTag(dataNode)) {
-            this.setSourceset(dataNode);
+            this.setSources(dataNode);
         }
 
-        this.setAttr(dataNode, 'src', this.getAttr(dataNode, 'data-src'));
+        helpers.setAttr(dataNode, 'src', helpers.getAttr(dataNode, 'data-src'));
 
         return new Promise((resolve, reject) => {
             dataNode.onload = (e) => resolve(e.target);
@@ -30,30 +30,8 @@ export default {
         let sources = helpers.getSiblings(dataNode);
 
         sources.forEach(source => {
-            this.setAttr(source, 'srcset', this.getAttr(source, 'data-srcset'));
+            helpers.setAttr(source, 'srcset', helpers.getAttr(source, 'data-srcset'));
         });
-    },
-
-    /**
-     * Get attribute of a dom node
-     * @param  {[DOMNode]} node
-     * @param  {string} attributeName
-     * @return {string}
-     */
-    getAttr(node, attributeName) {
-        return node.getAttribute(attributeName);
-    },
-
-    /**
-     * Set attribute of a dom node
-     * @param {[DOMNode]} node
-     * @param {string} attributeName
-     * @param {string} value
-     */
-    setAttr(node, attribute, value) {
-        if (value) {
-            node.setAttribute(attribute, value);
-        }
     },
 
     /**
