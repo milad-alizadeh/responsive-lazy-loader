@@ -37,6 +37,43 @@ describe('Helpers', () => {
         expect(items.length).toBe(5);
     });
 
+    test('getSiblings()', () => {
+        document.body.innerHTML = `
+            <div class="container-1">
+                <div class="item-1"></div>
+                <div class="item-2"></div>
+                <div class="item-3"></div>
+            </div>
+        `;
+
+        let item2 = document.querySelector('.item-2');
+        let siblings = helpers.getSiblings(item2);
+
+        expect(siblings.length).toBe(2);
+        expect(siblings[0].classList.contains('item-1')).toBe(true);
+    });
+
+    test('isInPictureTag()', () => {
+        document.body.innerHTML = `
+            <picture>
+            <source
+                data-srcset="http://via.placeholder.com/400x300"
+                media="(max-width: 500px)" />
+            <source
+                data-srcset="http://via.placeholder.com/800x600" />
+            <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                data-src="http://via.placeholder.com/200x200"
+                class="image"
+                alt="" />
+            </picture>
+        `;
+
+        let image = document.querySelector('.image');
+
+        expect(helpers.isInPictureTag(image)).toBe(true);
+    });
+
     test('getNodeOffsetY()', () => {
         document.body.innerHTML = `
             <div class="item"></div>
