@@ -84,6 +84,17 @@ export default {
     },
 
     /**
+     * remove an attribute from a dom node
+     * @param {[DOMNode]} node
+     * @param {string} attributeName
+     */
+    removeAttr(node, attribute) {
+        if (node.hasAttribute(attribute)) {
+            node.removeAttribute(attribute);
+        }
+    },
+
+    /**
      * Check if the parent of a node is a picture tag
      * @param  {DOMElement} dataNode
      * @return {Boolean}

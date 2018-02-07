@@ -86,6 +86,15 @@ describe('Helpers', () => {
         expect(newImage).toEqual(output);
     });
 
+    test('removeAttr() remove attribute', () => {
+        let inputImage = new Image();
+        inputImage.setAttribute('data-src', '#');
+
+        helpers.removeAttr(inputImage, 'data-src');
+
+        expect(inputImage.getAttribute('data-src')).toBeFalsy();
+    });
+
     test('isInPictureTag()', () => {
         document.body.innerHTML = `
             <picture>
