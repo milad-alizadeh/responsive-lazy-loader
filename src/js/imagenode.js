@@ -12,92 +12,32 @@ export default {
      * @return {Promise}
      */
     createImageNode(dataNode, options) {
-        return new Promise((resolve, reject) => {
-            let img = new Image();
-            this.setCustomAttrs(dataNode, img, options);
-            this.setAdditionalAttrs(dataNode, img, options);
-            img.onload = (e) => resolve(e.target);
-            img.onerror = reject;
-            return img;
-        });
-    },
-
-    /**
-     * Get attribute of a dom node
-     * @param  {[DOMNode]} node
-     * @param  {string} attributeName
-     * @return {string}
-     */
-    getAttr(node, attributeName) {
-        return node.getAttribute(attributeName);
-    },
-
-    /**
-     * Loop through each custom attribute and assign it to the new image tag
-     * @param {DOM Element} dataNode
-     * @param {Image} img
-     * @param {Object} options
-     */
-    setCustomAttrs(dataNode, img, options) {
-        this.getCustomImgAttrs(options).forEach((attr) => {
-            this.setAttr(img, attr.name, this.getAttr(dataNode, attr.value));
-        });
-    },
-
-    /**
-     * Loop through every attribute on the original image tag and apply it to the new one
-     * Excludes the custom attributes that have already been set
-     * @param {DOM Element} dataNode
-     * @param {Image} img
-     * @param {Object} options
-     */
-    setAdditionalAttrs(dataNode, img, options) {
-        [].slice.call(dataNode.attributes).forEach((attr) => {
-            if (!['src', 'data-src', 'data-srcset', 'data-sizes'].includes(attr.name)) {
-                this.setAttr(img, attr.name, attr.value);
-            }
-        });
-    },
-
-    /**
-     * Custom settings for new img tag attributes
-     * @param  {Object} options
-     * @return {Array}
-     */
-    getCustomImgAttrs(options) {
-        let imgAttrs = [];
-        let customOptions = [
-            {
-                name: 'srcset',
-                value: options.srcset
-            },
-            {
-                name: 'src',
-                value: options.src
-            },
-            {
-                name: 'sizes',
-                value: options.sizes
-            }
-        ];
-        customOptions.forEach((option) => {
-            if (option.value !== undefined) {
-                imgAttrs.push(option);
-            }
-        });
-        return imgAttrs;
-    },
-
-    /**
-     * Set attribute of a dom node
-     * @param {[DOMNode]} node
-     * @param {string} attributeName
-     * @param {string} value
-     */
-    setAttr(node, attribute, value) {
-        if (value) {
-            node.setAttribute(attribute, value);
+        // Chage the data-src of sources if we are loading a picture tag
+        if (helpers.isInPictureTag(dataNode)) {
+            this.setSources(dataNode);
         }
+
+        helpers.setAttr(dataNode, 'src', helpers.getAttr(dataNode, 'data-src'));
+        helpers.setAttr(dataNode, 'srcset', helpers.getAttr(dataNode, 'data-srcset'));
+        helpers.setAttr(dataNode, 'sizes', helpers.getAttr(dataNode, 'data-sizes'));
+        helpers.removeAttr(dataNode, 'data-src');
+        helpers.removeAttr(dataNode, 'data-srcset');
+        helpers.removeAttr(dataNode, 'data-sizes');
+
+        return new Promise((resolve, reject) => {
+            dataNode.onload = (e) => resolve(e.target);
+            dataNode.onerror = reject;
+            return dataNode;
+        });
+    },
+
+    setSources(dataNode) {
+        let sources = helpers.getSiblings(dataNode);
+
+        sources.forEach(source => {
+            helpers.setAttr(source, 'srcset', helpers.getAttr(source, 'data-srcset'));
+            helpers.removeAttr(source, 'data-srcset');
+        });
     },
 
     /**

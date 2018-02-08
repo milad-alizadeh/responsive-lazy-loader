@@ -18,6 +18,18 @@ export default {
     },
 
     /**
+     * Find a node siblings with a specific class name
+     * @param {DOMElement} el - A fiven DOM node
+     * @param {String} className - Siblings class name
+     * @return {Array} - An array of DOM nodes
+     */
+    getSiblings(el) {
+        return [].filter.call(el.parentNode.children, (child) => {
+            return child !== el && child.nodeType === 1;
+        });
+    },
+
+    /**
      * Get scroll top
      * @return {int}
      */
@@ -47,6 +59,48 @@ export default {
         }
 
         return array;
+    },
+
+    /**
+     * Get attribute of a dom node
+     * @param  {[DOMNode]} node
+     * @param  {string} attributeName
+     * @return {string}
+     */
+    getAttr(node, attributeName) {
+        return node.getAttribute(attributeName);
+    },
+
+    /**
+     * Set attribute of a dom node
+     * @param {[DOMNode]} node
+     * @param {string} attributeName
+     * @param {string} value
+     */
+    setAttr(node, attribute, value) {
+        if (value) {
+            node.setAttribute(attribute, value);
+        }
+    },
+
+    /**
+     * remove an attribute from a dom node
+     * @param {[DOMNode]} node
+     * @param {string} attributeName
+     */
+    removeAttr(node, attribute) {
+        if (node.hasAttribute(attribute)) {
+            node.removeAttribute(attribute);
+        }
+    },
+
+    /**
+     * Check if the parent of a node is a picture tag
+     * @param  {DOMElement} dataNode
+     * @return {Boolean}
+     */
+    isInPictureTag(dataNode) {
+        return dataNode.parentNode.nodeName === 'PICTURE';
     },
 
     /**

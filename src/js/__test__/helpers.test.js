@@ -37,6 +37,85 @@ describe('Helpers', () => {
         expect(items.length).toBe(5);
     });
 
+    test('getSiblings()', () => {
+        document.body.innerHTML = `
+            <div class="container-1">
+                <div class="item-1"></div>
+                <div class="item-2"></div>
+                <div class="item-3"></div>
+            </div>
+        `;
+
+        let item2 = document.querySelector('.item-2');
+        let siblings = helpers.getSiblings(item2);
+
+        expect(siblings.length).toBe(2);
+        expect(siblings[0].classList.contains('item-1')).toBe(true);
+    });
+
+    test('getAttr() get class attribute successfully correctly', () => {
+        let inputImage = new Image();
+        inputImage.setAttribute('src', '#');
+        inputImage.setAttribute('alt', 'My Test Image');
+        inputImage.setAttribute('class', 'testimage');
+        let inputAttr = 'class';
+        let output = 'testimage';
+        expect(helpers.getAttr(inputImage, inputAttr)).toBe(output);
+    });
+
+    test('getAttr() get attribute with a null value', () => {
+        let inputImage = new Image();
+        inputImage.setAttribute('src', '#');
+        let inputAttr = 'class';
+        let output = null;
+        expect(helpers.getAttr(inputImage, inputAttr)).toBe(output);
+    });
+
+    test('setAttr() set attribute with value', () => {
+        let newImage = new Image();
+        helpers.setAttr(newImage, 'alt', 'Test Alt');
+        let output = new Image();
+        output.setAttribute('alt', 'Test Alt');
+        expect(newImage).toEqual(output);
+    });
+
+    test('setAttr() set attribute with undefined value', () => {
+        let newImage = new Image();
+        helpers.setAttr(newImage, 'alt', undefined);
+        let output = new Image();
+        expect(newImage).toEqual(output);
+    });
+
+    test('removeAttr() remove attribute', () => {
+        let inputImage = new Image();
+        inputImage.setAttribute('data-src', '#');
+
+        helpers.removeAttr(inputImage, 'data-src');
+
+        expect(inputImage.getAttribute('data-src')).toBeFalsy();
+    });
+
+    test('isInPictureTag()', () => {
+        document.body.innerHTML = `
+            <picture>
+            <source
+                data-srcset="http://via.placeholder.com/400x300"
+                media="(max-width: 500px)" />
+            <source
+                data-srcset="http://via.placeholder.com/800x600" />
+            <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                data-src="http://via.placeholder.com/200x200"
+                class="image"
+                alt="" />
+            </picture>
+        `;
+
+        let image = document.querySelector('.image');
+
+        expect(helpers.isInPictureTag(image)).toBe(true);
+    });
+
     test('getNodeOffsetY()', () => {
         document.body.innerHTML = `
             <div class="item"></div>
