@@ -66,13 +66,9 @@ You can also lazyload picture tags using this ibrary. Please bear in mind that p
 
 ```html
 <picture>
-	<source
-		data-srcset="http://via.placeholder.com/400x300"
-		media="(max-width: 500px)" />
-	<source
-		data-srcset="http://via.placeholder.com/800x600" />
-    <img
-        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+	<source	data-srcset="http://via.placeholder.com/400x300" media="(max-width: 500px)" />
+	<source data-srcset="http://via.placeholder.com/800x600" />
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
         data-src="http://via.placeholder.com/200x200"
         class=""
         alt="" />
