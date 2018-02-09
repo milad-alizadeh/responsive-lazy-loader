@@ -1,12 +1,15 @@
+body {
+    margin: 0;
+}
+
+body, * {
+    box-sizing: border-box;
+}
+
 .u-container {
     margin: auto;
     max-width: 800px;
     padding: 5rem 2rem;
-}
-
-body {
-    margin: 0;
-    box-sizing: border-box;
 }
 
 img {
