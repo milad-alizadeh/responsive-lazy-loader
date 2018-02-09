@@ -33,7 +33,10 @@ export default class {
         if (this.options.loadOnScroll) {
             window.addEventListener('scroll', helpers.throttle(() => this.setLoadOnScroll(), this.options.throttle));
         }
+
         window.addEventListener('resize', helpers.debounce(() => this.recalculateAndLoad(), this.options.resizeDebounce));
+
+        this.listenersCreated = true;
     }
 
     /**
@@ -97,6 +100,9 @@ export default class {
      * Search for the datanodes again and reload them
      */
     refresh() {
+        if (!this.listenersCreated) {
+            this.setListeners();
+        }
         this.dataNodes = this.getDataNodes();
         this.recalculateAndLoad();
     }
