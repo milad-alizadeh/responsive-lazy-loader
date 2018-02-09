@@ -6,12 +6,12 @@ import helpers from './helpers';
  */
 export default {
     /**
-     * Create a promise which returns an image node
+     * Change the src, srcset and sizes attributes of a data nod eto load the image
      * @param  {DOMNode} dataNode
-     * @param {Object} options
+     * @param {Function} callback
      * @return {Promise}
      */
-    createImageNode(dataNode, options) {
+    createImage(dataNode, callback) {
         // Chage the data-src of sources if we are loading a picture tag
         if (helpers.isInPictureTag(dataNode)) {
             this.setSources(dataNode);
@@ -24,13 +24,16 @@ export default {
         helpers.removeAttr(dataNode, 'data-srcset');
         helpers.removeAttr(dataNode, 'data-sizes');
 
-        return new Promise((resolve, reject) => {
-            dataNode.onload = (e) => resolve(e.target);
-            dataNode.onerror = reject;
-            return dataNode;
-        });
+        dataNode.onload = e => callback(e.target);
+        dataNode.onerror = () => {
+            throw new Error('Image could not be loaded');
+        };
     },
 
+    /**
+     * Set srcset attribute of picture tag sources
+     * @param {DOMNode} dataNode
+     */
     setSources(dataNode) {
         let sources = helpers.getSiblings(dataNode);
 

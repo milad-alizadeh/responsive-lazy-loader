@@ -41,10 +41,11 @@ export default class {
      * @param  {Object} dataNode
      * @param  {Image Node} image
      */
-    onImageCreated(dataNode, image) {
-        if (dataNode.parentNode) {
+    onImageLoaded(image) {
+        if (image.parentNode) {
             // Replace the dataNode with the loaded image
-            this.dataNodes = helpers.removeItemFromArray(this.dataNodes, dataNode);
+            this.dataNodes = helpers.removeItemFromArray(this.dataNodes, image);
+
             // Recalculate offsets and reload the visible images
             this.recalculateAndLoad();
 
@@ -63,9 +64,7 @@ export default class {
             let loadingArea = helpers.loadingArea(this.options.threshold);
 
             if (dataNode.offsetY >= loadingArea.min && dataNode.offsetY <= loadingArea.max) {
-                ImageNode.createImageNode(dataNode, this.options).then(image => {
-                    this.onImageCreated(dataNode, image);
-                });
+                ImageNode.createImage(dataNode, image => this.onImageLoaded(image));
             }
         });
     }
@@ -75,9 +74,7 @@ export default class {
      */
     setLoadAll() {
         this.dataNodes.forEach((dataNode, index) => {
-            ImageNode.createImageNode(dataNode, this.options).then(image => {
-                this.onImageCreated(dataNode, image);
-            });
+            ImageNode.createImage(dataNode, image => this.onImageLoaded(image));
         });
     }
 
