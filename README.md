@@ -1,10 +1,12 @@
 # Responsive Lazy Loader
-[![npm version][npm-badge-version]][npm-link] [![Build Status][travis-badge]][travis-link]
+[![npm version][npm-badge-version]][npm-link] [![Build Status][travis-badge]][travis-link] [![Code Coverage][codecov-badge]][codecov-link] [![devDependency Status](https://david-dm.org/boennemann/badges/dev-status.svg)](https://david-dm.org/boennemann/badges#info=devDependencies)
 
 [npm-badge-version]: https://img.shields.io/npm/v/responsive-lazy-loader.svg
 [npm-link]: https://www.npmjs.com/package/responsive-lazy-loader
 [travis-badge]: https://travis-ci.org/milad-alizadeh/responsive-lazy-loader.svg?branch=master
 [travis-link]: https://travis-ci.org/milad-alizadeh/responsive-lazy-loader
+[codecov-badge]: https://codecov.io/gh/milad-alizadeh/responsive-lazy-loader/branch/master/graph/badge.svg
+[codecov-link]: https://codecov.io/gh/milad-alizadeh/responsive-lazy-loader
 
 Responsive Lazy Loader is a lightweight script that loads your images when they enter the viewport. Not only that but it honours your responsive (srcset) images.
 
@@ -58,6 +60,24 @@ The script also takes into account ```srcset``` and ```sizes``` by binding them 
 	data-srcset="http://via.placeholder.com/400x300 400w, http://via.placeholder.com/800x600 800w"
 	data-sizes="(max-width: 500px) 400px, 800px"
 />
+```
+
+You can also lazyload picture tags using this ibrary. Please bear in mind that picture tag is not supported in all browsers. In order to make picture tag work you need to use a picture tag polyfill such as [picturefill](https://scottjehl.github.io/picturefill/)
+
+```html
+<picture>
+	<source
+		data-srcset="http://via.placeholder.com/400x300"
+		media="(max-width: 500px)" />
+	<source
+		data-srcset="http://via.placeholder.com/800x600" />
+    <img
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+        data-src="http://via.placeholder.com/200x200"
+        class=""
+        alt="" />
+</picture>
+
 ```
 
 ## Parameters
