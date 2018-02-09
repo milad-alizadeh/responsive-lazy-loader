@@ -10,9 +10,9 @@ export default class {
     constructor(options) {
         this.options = Options.setOptions(options);
         this.dataNodes = this.getDataNodes();
-        this.setListeners();
 
         if (this.dataNodes.length) {
+            this.setListeners();
             ImageNode.setImageOffsets(this.dataNodes);
             this.setLoad();
         }
@@ -30,10 +30,15 @@ export default class {
      * Set resize and optionally scroll listeners
      */
     setListeners() {
+        console.log('setListeners');
+
         if (this.options.loadOnScroll) {
             window.addEventListener('scroll', helpers.throttle(() => this.setLoadOnScroll(), this.options.throttle));
         }
+
         window.addEventListener('resize', helpers.debounce(() => this.recalculateAndLoad(), this.options.resizeDebounce));
+
+        this.listenersCreated = true;
     }
 
     /**
@@ -60,15 +65,13 @@ export default class {
      * If we want the images to load when they're in the viewport
      */
     setLoadOnScroll() {
-        if (this.dataNodes.length) {
-            this.dataNodes.forEach((dataNode, index) => {
-                let loadingArea = helpers.loadingArea(this.options.threshold);
+        this.dataNodes.forEach((dataNode, index) => {
+            let loadingArea = helpers.loadingArea(this.options.threshold);
 
-                if (dataNode.offsetY >= loadingArea.min && dataNode.offsetY <= loadingArea.max) {
-                    ImageNode.createImage(dataNode, image => this.onImageLoaded(image));
-                }
-            });
-        }
+            if (dataNode.offsetY >= loadingArea.min && dataNode.offsetY <= loadingArea.max) {
+                ImageNode.createImage(dataNode, image => this.onImageLoaded(image));
+            }
+        });
     }
 
     /**
@@ -99,6 +102,9 @@ export default class {
      * Search for the datanodes again and reload them
      */
     refresh() {
+        if (!this.listenersCreated) {
+            this.setListeners();
+        }
         this.dataNodes = this.getDataNodes();
         this.recalculateAndLoad();
     }
