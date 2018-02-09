@@ -10,9 +10,9 @@ export default class {
     constructor(options) {
         this.options = Options.setOptions(options);
         this.dataNodes = this.getDataNodes();
+        this.setListeners();
 
         if (this.dataNodes.length) {
-            this.setListeners();
             ImageNode.setImageOffsets(this.dataNodes);
             this.setLoad();
         }
@@ -60,13 +60,15 @@ export default class {
      * If we want the images to load when they're in the viewport
      */
     setLoadOnScroll() {
-        this.dataNodes.forEach((dataNode, index) => {
-            let loadingArea = helpers.loadingArea(this.options.threshold);
+        if (this.dataNodes.length) {
+            this.dataNodes.forEach((dataNode, index) => {
+                let loadingArea = helpers.loadingArea(this.options.threshold);
 
-            if (dataNode.offsetY >= loadingArea.min && dataNode.offsetY <= loadingArea.max) {
-                ImageNode.createImage(dataNode, image => this.onImageLoaded(image));
-            }
-        });
+                if (dataNode.offsetY >= loadingArea.min && dataNode.offsetY <= loadingArea.max) {
+                    ImageNode.createImage(dataNode, image => this.onImageLoaded(image));
+                }
+            });
+        }
     }
 
     /**
