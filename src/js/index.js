@@ -30,8 +30,6 @@ export default class {
      * Set resize and optionally scroll listeners
      */
     setListeners() {
-        console.log('setListeners');
-
         if (this.options.loadOnScroll) {
             window.addEventListener('scroll', helpers.throttle(() => this.setLoadOnScroll(), this.options.throttle));
         }
