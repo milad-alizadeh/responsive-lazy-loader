@@ -1,19 +1,4 @@
 {
-    "plugins": [
-        "transform-object-rest-spread",
-        ["transform-runtime"]
-    ],
-    "presets": ["env"],
-    "env": {
-        "test": {
-            "presets": [
-                ["env", {
-                    "targets": {
-                        "node": "current"
-                    }
-                }]
-            ],
-            "plugins": ["istanbul"]
-        }
-    }
+    "plugins": ["transform-object-rest-spread"],
+    "presets": ["env"]
 }
