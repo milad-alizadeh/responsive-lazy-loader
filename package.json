@@ -5,6 +5,7 @@
   "description": "Responsive Lazy Loader is a lightweight script that loads your images when they enter the viewport",
   "main": "dist/responsive-lazy-loader.min.js",
   "dependencies": {
+    "prismjs": "^1.11.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
@@ -12,8 +13,8 @@
     "babel-eslint": "^8.0.1",
     "babel-jest": "^21.2.0",
     "babel-loader": "^7.1.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "clean-webpack-plugin": "^0.1.16",
     "codecov": "^3.0.0",
@@ -55,6 +56,8 @@
     "test:watch": "npm run test -- --watch --onlyChanged --notify",
     "start": "npm run dev",
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config=webpack.config.dev.js",
+    "demo:dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config=webpack.config.demo.dev.js",
+    "demo:build": "node ./node_modules/webpack/bin/webpack.js --hide-modules -p --progress --config=webpack.config.demo.js",
     "build": "node ./node_modules/webpack/bin/webpack.js --hide-modules -p --progress",
     "production": "npm run test && npm run build",
     "report-coverage": "codecov"

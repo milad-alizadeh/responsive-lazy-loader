@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    display: block;
+}
+
+body, * {
+    box-sizing: border-box;
+}
+
+p,
+li,
+h1,
+h2,
+h3,
+h4 {
+    font-family: Helvetica, Arial;
+    font-weight: normal;
+}
+
+.l-container {
+    margin: auto;
+    max-width: 1200px;
+    padding: 50px 20px;
+}
+
+.l-section {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+}
+
+.l-grid {
+    margin: 0 -15px;
+}
+.u-l-grid__ {
+    margin: 0 -15px;
+}
+
+.c-image {
+    width: 100%;
+
+    &--fade {
+        opacity: 0;
+        transition: visibility 1s, opacity 1s;
+        visibility: hidden;
+
+        &.c-image--loaded {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
