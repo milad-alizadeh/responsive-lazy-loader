@@ -1,7 +1,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initiascale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Responsive Lazy Loader</title>
     </head>
@@ -11,31 +11,59 @@
         }
     </style>
 <body>
-        <div class="l-container">
-        <section class="l-section">
-            <header>
-                <h2>Regular image tag</h2>
-            </header>
-            <pre><code class="c-code" data-language="markup">
+<div class="container">
+    <div class="side-container">
+        <div class="side">
+            <ul>
+                <li>
+                    <a href="#regular-image">Regular image</a>
+                </li>
+                <li>
+                    <a href="#responsive-image">Responsive image</a>
+                </li>
+                <li>
+                    <a href="#picture-tag">Picture tag</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main">
+        <section class="section" id="regular-image">
+        <header>
+            <h2>Regular image tag</h2>
+        </header>
+        <img
+        class="image"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+        data-src="images/04.jpg"
+        alt="picture tag" />
+
+        <h3>HTML</h3>
+        <pre><code class="code" data-language="markup">
 <!--
 <img
     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
     data-src="images/03.jpg"
     alt="picture tag" />
 -->
-            </code></pre>
-            <img
-                class="c-image"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                data-src="images/04.jpg"
-                alt="picture tag" />
+        </code></pre>
         </section>
 
-        <section class="l-section">
-            <header>
-                <h2>Image with srcset and sizes</h2>
-            </header>
-            <pre><code class="c-code" data-language="markup">
+        <section class="section" id="responsive-image">
+        <header>
+            <h2>Responsive image with srcset and sizes attribute</h2>
+        </header>
+
+        <img
+            class="image"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+            data-src="images/01-medium.jpg"
+            data-srcset="images/01-small.jpg 450w, images/01-medium.jpg 800w, images/01-large.jpg 1400w"
+            data-sizes="(max-width: 500px) 450px, (max-width: 1000px) 800px, 1400px"
+            alt="picture tag" />
+
+        <h3>HTML</h3>
+        <pre><code class="code" data-language="markup">
 <!--
 <img
     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
@@ -44,22 +72,33 @@
     data-sizes="(max-width: 500px) 450px, (max-width: 1000px) 800px, 1400px"
     alt="picture tag" />
 -->
-            </code></pre>
-            <img
-                class="c-image"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                data-src="images/01-medium.jpg"
-                data-srcset="images/01-small.jpg 450w, images/01-medium.jpg 800w, images/01-large.jpg 1400w"
-                data-sizes="(max-width: 500px) 450px, (max-width: 1000px) 800px, 1400px"
-                alt="picture tag" />
+        </code></pre>
         </section>
 
-        <section class="l-section">
-            <header>
-                <h2>Using Picture Tag</h2>
-            </header>
-            <pre><code class="c-code" data-language="markup">
-<!--
+        <section class="section" id="picture-tag">
+
+        <header>
+            <h2>Picture Tag</h2>
+        </header>
+
+        <picture>
+            <source data-srcset="images/02-small.jpg"
+            media="(max-width: 500px)" />
+
+            <source data-srcset="images/02-medium.jpg"
+            media="(max-width: 1200px)" />
+
+            <source data-srcset="images/02-large.jpg" />
+
+            <img class="image"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+            data-src="images/02-medium.jpg"
+            alt="picture tag" />
+        </picture>
+
+        <h3>HTML</h3>
+        <pre><code class="code" data-language="markup">
+        <!--
 <picture>
     <source
         data-srcset="images/02-small.jpg"
@@ -76,141 +115,150 @@
         data-src="images/02-medium.jpg"
         alt="picture tag" />
 </picture>
--->
-            </code></pre>
-            <picture>
-                <source data-srcset="images/02-small.jpg"
-                media="(max-width: 500px)" />
-
-                <source data-srcset="images/02-medium.jpg"
-                media="(max-width: 1200px)" />
-
-                <source data-srcset="images/02-large.jpg" />
-
-                <img class="c-image"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                data-src="images/02-medium.jpg"
-                alt="picture tag" />
-            </picture>
+        -->
+        </code></pre>
         </section>
 
-        <section class="l-section">
-            <header>
-                <h2>Fade the image once it's loaded</h2>
-            </header>
+        <section class="section">
+        <header>
+        <h2>Fade the image once it's loaded</h2>
+        </header>
 
-            <h3>HTML</h3>
-            <pre><code class="c-code" data-language="markup">
+        <img
+        class="image image--fade"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+        data-src="images/05.jpg"
+        alt="picture tag" />
+
+        <h3>HTML</h3>
+        <pre><code class="code" data-language="markup">
 <!--
 <img
-    class="c-image c-image--fade"
+    class="image image--fade"
     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
     data-src="images/03.jpg"
     alt="picture tag" />
-            -->
-            </code></pre>
+-->
+        </code></pre>
 
-
-            <h3>CSS</h3>
-            <pre><code class="c-code" data-language="css">
+        <h3>CSS</h3>
+        <pre><code class="code" data-language="css">
 <!--
-.c-image {
+.image {
     width: 100%;
 }
 
-.c-image--fade {
+.image--fade {
     opacity: 0;
     transition: visibility 1s, opacity 1s;
     visibility: hidden;
 }
 
-.c-image--fade.c-image--loaded {
+.image--fade.image--loaded {
     opacity: 1;
     visibility: visible;
 }
--->
-            </code></pre>
+        -->
+        </code></pre>
 
 
-            <h3>JavaSript</h3>
-            <pre><code class="c-code" data-language="javascript">
+        <h3>JavaSript</h3>
+        <pre><code class="code" data-language="javascript">
 <!--
 import LazyLoader from 'responsive-lazy-loader';
 
 new LazyLoader({
     callback(el) {
-        el.classList.add('c-image--loaded');
+        el.classList.add('image--loaded');
     }
 });
 -->
-            </code></pre>
-
-            <img
-                class="c-image c-image--fade"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                data-src="images/05.jpg"
-                alt="picture tag" />
+        </code></pre>
         </section>
 
 
-        <section class="l-section">
-            <header>
-                <h2>Fade the image once it's loaded</h2>
-            </header>
+        <section class="section">
+        <header>
+        <h2>use a placeholder background before the image is loaded</h2>
+        </header>
 
-            <h3>HTML</h3>
-            <pre><code class="c-code" data-language="markup">
+        <div class="image-container">
+        <img
+        class="image image--fade image--absolute"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+        data-src="images/04.jpg"
+        alt="picture tag" />
+        </div>
+
+        <h3>HTML</h3>
+        <pre><code class="code" data-language="markup">
 <!--
-<img
-    class="c-image c-image--fade"
-    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-    data-src="images/03.jpg"
-    alt="picture tag" />
-            -->
-            </code></pre>
+<div class="image-container">
+    <img
+        class="image image--fade image--absolute "
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+        data-src="images/03.jpg"
+        alt="picture tag" />
+</div>
+-->
+        </code></pre>
 
 
-            <h3>CSS</h3>
-            <pre><code class="c-code" data-language="css">
+        <h3>CSS</h3>
+        <pre><code class="code" data-language="css">
 <!--
-.c-image {
+.image-container {
+    background-image: url('http://via.placeholder.com/1200x800');
+    background-size: cover;
+    position: relative;
+}
+
+.image-container::before {
+    content: '';
+    display: table;
+    padding-top: 66.66%;
+}
+
+.image {
     width: 100%;
 }
 
-.c-image--fade {
+.image--fade {
     opacity: 0;
     transition: visibility 1s, opacity 1s;
     visibility: hidden;
 }
 
-.c-image--fade.c-image--loaded {
+.image--absolute {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    width: 100%;
+}
+
+.image--fade.image--loaded {
     opacity: 1;
     visibility: visible;
 }
 -->
-            </code></pre>
+        </code></pre>
 
 
-            <h3>JavaSript</h3>
-            <pre><code class="c-code" data-language="javascript">
+        <h3>JavaSript</h3>
+        <pre><code class="code" data-language="javascript">
 <!--
 import LazyLoader from 'responsive-lazy-loader';
 
 new LazyLoader({
-    callback(el) {
-        el.classList.add('c-image--loaded');
-    }
+callback(el) {
+    el.classList.add('image--loaded');
+}
 });
 -->
-            </code></pre>
-
-            <img
-                class="c-image c-image--fade"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                data-src="images/05.jpg"
-                alt="picture tag" />
+        </code></pre>
         </section>
-
     </div>
+</div>
 </body>
 </html>

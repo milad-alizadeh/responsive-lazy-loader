@@ -8,7 +8,7 @@ import '../../node_modules/prismjs/components/prism-scss.js';
 
 Prism.highlightAll();
 
-let codeTags = [].slice.call(document.querySelectorAll('.c-code'));
+let codeTags = [].slice.call(document.querySelectorAll('.code'));
 
 codeTags.forEach(codeTag => {
     let code = codeTag.innerHTML;
@@ -23,6 +23,6 @@ codeTags.forEach(codeTag => {
 
 new LazyLoader({
     callback(el) {
-        el.classList.add('c-image--loaded');
+        el.classList.add('image--loaded');
     }
 });
